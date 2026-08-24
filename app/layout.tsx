@@ -36,7 +36,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         inter.variable,
       )}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-muted">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

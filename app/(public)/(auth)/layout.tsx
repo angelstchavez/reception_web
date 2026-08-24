@@ -1,12 +1,15 @@
 import { ThemeToggle } from "@/components/theme/theme-toggle";
-import { Button } from "@/components/ui/button";
 import { APP_NAME } from "@/lib/env";
 import { GalleryVerticalEnd } from "lucide-react";
 import Link from "next/link";
 
-export default function Home() {
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex min-h-screen flex-col">
       {/* Header */}
       <header className="border-b bg-card">
         <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
@@ -18,22 +21,13 @@ export default function Home() {
             <h1 className="text-xl font-bold tracking-tight">{APP_NAME}</h1>
           </Link>
 
-          <div className="flex items-center gap-2">
-            <Link href="/login">
-              <Button>Iniciar sesión</Button>
-            </Link>
-            <ThemeToggle />
-          </div>
+          <ThemeToggle />
         </div>
       </header>
 
       {/* Contenido */}
-      <main className="flex flex-1 items-center justify-center bg-muted">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center px-6 py-12 text-center">
-          <h1 className="text-6xl font-black leading-none tracking-tight sm:text-7xl md:text-8xl lg:text-[9rem] xl:text-[11rem]">
-            {APP_NAME}
-          </h1>
-        </div>
+      <main className="flex flex-1 items-center justify-center">
+        {children}
       </main>
 
       {/* Footer */}
@@ -45,30 +39,24 @@ export default function Home() {
           </p>
 
           <div className="flex items-center gap-4">
-            <a
+            <Link
               href="/privacy"
               className="transition-colors hover:text-foreground"
             >
               Privacidad
-            </a>
-            <a
-              href="/cookies"
-              className="transition-colors hover:text-foreground"
-            >
-              Cookies
-            </a>
-            <a
+            </Link>
+            <Link
               href="/terms"
               className="transition-colors hover:text-foreground"
             >
               Términos
-            </a>
-            <a
+            </Link>
+            <Link
               href="/contact"
               className="transition-colors hover:text-foreground"
             >
               Contacto
-            </a>
+            </Link>
           </div>
         </div>
       </footer>
