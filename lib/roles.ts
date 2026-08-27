@@ -1,16 +1,14 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { Role } from "@/types/api";
 
 export type RoleType = Role;
 
 export const ROUTE_ACCESS: Record<string, RoleType[]> = {
+  "/dashboard/events": ["admin", "guard"],
   "/dashboard": ["admin", "guard", "student", "professor", "visitor"],
-  "/scan": ["admin", "guard"],
-  "/events": ["admin", "guard"],
   "/visitors": ["admin", "guard"],
   "/users": ["admin"],
 };
 
-export function homeForRole(_role: RoleType): string {
+export function homeForRole(): string {
   return "/dashboard";
 }

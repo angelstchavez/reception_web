@@ -50,7 +50,7 @@ async function request<T>(
     body = new URLSearchParams(form).toString();
   }
 
-  const res = await fetch(`/${path}${buildQuery(params)}`, {
+  const res = await fetch(`/api/reception/${path}${buildQuery(params)}`, {
     ...rest,
     headers: finalHeaders,
     body,
@@ -62,10 +62,18 @@ async function request<T>(
   }
 
   const text = await res.text();
-  const data = text ? JSON.parse(text) : undefined;
+  let data: unknown;
+  try {
+    data = text ? JSON.parse(text) : undefined;
+  } catch {
+    data = text;
+  }
 
   if (!res.ok) {
-    const detail = data?.detail ?? data;
+    const detail =
+      typeof data === "object" && data !== null && "detail" in data
+        ? data.detail
+        : data;
     const message =
       typeof detail === "string"
         ? detail

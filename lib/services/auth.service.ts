@@ -13,11 +13,11 @@ export const authService = {
   },
 
   refresh() {
-    return apiClient.post<PublicTokenInfo>("auth/refresh", { json: {} });
+    return apiClient.post<PublicTokenInfo>("auth/refresh");
   },
 
   logout() {
-    return apiClient.post<void>("auth/logout", { json: {} });
+    return apiClient.post<void>("auth/logout");
   },
 
   me() {

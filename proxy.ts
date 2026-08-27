@@ -26,7 +26,7 @@ interface Session {
 
 async function fetchSession(request: NextRequest): Promise<Session | null> {
   try {
-    const meUrl = new URL("/api/auth/me", request.url);
+    const meUrl = new URL("/api/reception/auth/me", request.url);
     const res = await fetch(meUrl, {
       headers: { cookie: request.headers.get("cookie") ?? "" },
     });
@@ -75,7 +75,7 @@ export default async function proxy(request: NextRequest) {
   const allowedRoles = ROUTE_ACCESS[matchedPrefix] ?? [];
 
   if (!allowedRoles.includes(role)) {
-    return NextResponse.redirect(new URL(homeForRole(role), request.url));
+    return NextResponse.redirect(new URL(homeForRole(), request.url));
   }
 
   const response = NextResponse.next();
@@ -93,7 +93,6 @@ export default async function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     "/dashboard/:path*",
-    "/scan/:path*",
     "/events/:path*",
     "/visitors/:path*",
     "/users/:path*",

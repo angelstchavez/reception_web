@@ -68,7 +68,7 @@ export function RegisterForm({
     try {
       await register({ email, full_name: fullName, password });
       await login(email, password);
-      router.push("/");
+      router.replace("/dashboard");
       router.refresh();
     } catch (err) {
       setError(registerErrorMessage(err));

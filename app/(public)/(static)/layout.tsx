@@ -50,6 +50,12 @@ export default function StaticLayout({
               Términos
             </Link>
             <Link
+              href="/cookies"
+              className="transition-colors hover:text-foreground"
+            >
+              Cookies
+            </Link>
+            <Link
               href="/contact"
               className="transition-colors hover:text-foreground"
             >

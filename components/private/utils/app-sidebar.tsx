@@ -3,7 +3,6 @@
 import * as React from "react";
 import {
   LayoutDashboard,
-  ScanLine,
   ListChecks,
   UserPlus,
   UsersRound,
@@ -38,14 +37,8 @@ const NAV_ITEMS: NavItem[] = [
     roles: ["admin", "guard", "student", "professor", "visitor"],
   },
   {
-    title: "Escanear",
-    url: "/scan",
-    icon: ScanLine,
-    roles: ["admin", "guard"],
-  },
-  {
     title: "Eventos de acceso",
-    url: "/events",
+    url: "/dashboard/events",
     icon: ListChecks,
     roles: ["admin", "guard"],
   },
@@ -78,7 +71,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton size="lg">
               <a href="/dashboard">
                 <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <ScanLine className="size-4" />
+                  <LayoutDashboard className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">Reception</span>
