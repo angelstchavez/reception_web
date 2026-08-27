@@ -10,7 +10,7 @@ Copia `.env.template` a `.env` y configura la dirección del backend:
 RECEPTION_API_URL=http://localhost:8000
 ```
 
-`NEXT_PUBLIC_API_URL` se admite temporalmente para instalaciones existentes, pero `RECEPTION_API_URL` es la variable recomendada porque no se expone al navegador.
+No añadas `/api` a `RECEPTION_API_URL`: la API expone directamente rutas como `/auth/login`, `/auth/logout` y `/access-events`.
 
 ## Desarrollo
 
