@@ -5,6 +5,7 @@ import Link from "next/link";
 import {
   LayoutDashboard,
   ListChecks,
+  ChartNoAxesCombined,
   UserPlus,
   UsersRound,
 } from "lucide-react";
@@ -41,6 +42,12 @@ const NAV_ITEMS: NavItem[] = [
     title: "Eventos de acceso",
     url: "/dashboard/events",
     icon: ListChecks,
+    roles: ["admin", "guard"],
+  },
+  {
+    title: "Reportes",
+    url: "/reports",
+    icon: ChartNoAxesCombined,
     roles: ["admin", "guard"],
   },
   {
