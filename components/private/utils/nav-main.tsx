@@ -28,11 +28,13 @@ export function NavMain({ items }: { items: NavMainItem[] }) {
             pathname === item.url || pathname.startsWith(`${item.url}/`);
           return (
             <SidebarMenuItem key={item.url}>
-              <SidebarMenuButton isActive={isActive} tooltip={item.title}>
-                <Link href={item.url}>
-                  <item.icon className="size-4" />
-                  <span>{item.title}</span>
-                </Link>
+              <SidebarMenuButton
+                render={<Link href={item.url} />}
+                isActive={isActive}
+                tooltip={item.title}
+              >
+                <item.icon className="size-4" />
+                <span>{item.title}</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
           );
