@@ -65,6 +65,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = useCallback(async () => {
     try {
       await authService.logout();
+    } catch (error) {
+      console.warn("No fue posible cerrar la sesión en el servidor:", error);
     } finally {
       setUser(null);
       setCardCredential(null);

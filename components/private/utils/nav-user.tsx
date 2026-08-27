@@ -45,8 +45,13 @@ export function NavUser({ user }: { user: UserRead }) {
   const router = useRouter();
 
   async function handleLogout() {
-    await logout();
-    router.push("/login");
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    } finally {
+      router.push("/login");
+    }
   }
 
   return (
@@ -109,7 +114,7 @@ export function NavUser({ user }: { user: UserRead }) {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onSelect={handleLogout}>
+            <DropdownMenuItem onClick={() => handleLogout()}>
               <LogOut />
               Cerrar sesión
             </DropdownMenuItem>
