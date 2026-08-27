@@ -50,7 +50,7 @@ async function request<T>(
     body = new URLSearchParams(form).toString();
   }
 
-  const res = await fetch(`/api/${path}${buildQuery(params)}`, {
+  const res = await fetch(`/${path}${buildQuery(params)}`, {
     ...rest,
     headers: finalHeaders,
     body,

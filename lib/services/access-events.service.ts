@@ -6,6 +6,7 @@ import type {
   ScanRequest,
   ScanResponse,
 } from "@/types/api";
+import { toQueryParams } from "../utils";
 
 export const accessEventsService = {
   scan(payload: ScanRequest) {
@@ -15,10 +16,14 @@ export const accessEventsService = {
   },
 
   listMine(params?: ListEventsParams) {
-    return apiClient.get<AccessEventRead[]>("access-events/me", { params });
+    return apiClient.get<AccessEventRead[]>("access-events/me", {
+      params: params ? toQueryParams(params) : undefined,
+    });
   },
 
   listAll(params?: ListAllEventsParams) {
-    return apiClient.get<AccessEventRead[]>("access-events", { params });
+    return apiClient.get<AccessEventRead[]>("access-events", {
+      params: params ? toQueryParams(params) : undefined,
+    });
   },
 };
