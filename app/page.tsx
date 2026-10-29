@@ -35,7 +35,7 @@ export default function Home() {
       </header>
 
       <main>
-        <section className="relative overflow-hidden border-b border-emerald-950/10 bg-[radial-gradient(circle_at_78%_20%,oklch(0.86_0.12_145/.45),transparent_35%),linear-gradient(135deg,oklch(0.98_0.02_145),var(--background)_55%)]">
+        <section className="relative overflow-hidden border-b border-primary/15 bg-[linear-gradient(135deg,var(--background),color-mix(in_oklch,var(--primary)_9%,var(--background))_55%,var(--background))]">
           <div className="mx-auto grid w-full max-w-7xl gap-14 px-6 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:px-8 lg:py-24">
             <div>
               <Badge variant="outline" className="border-primary/25 bg-background/70 px-3 py-1 text-primary shadow-sm"><Building2 data-icon="inline-start" /> Universidad Popular del Cesar</Badge>
@@ -44,7 +44,7 @@ export default function Home() {
               <div className="mt-8 flex flex-wrap gap-3"><Link href="/login"><Button size="lg">Acceso administrativo <ArrowRight data-icon="inline-end" /></Button></Link><Link href="/contact"><Button variant="outline" size="lg">Conocer soporte</Button></Link></div>
               <div className="mt-8 flex items-center gap-3 text-sm text-muted-foreground"><span className="flex size-7 items-center justify-center rounded-full bg-primary/12 text-primary"><BadgeCheck className="size-4" /></span><span>Plataforma protegida para personal autorizado</span></div>
             </div>
-            <div className="relative rounded-3xl border border-emerald-900/10 bg-card/90 p-4 shadow-2xl shadow-emerald-900/10 backdrop-blur sm:p-6">
+            <div className="relative rounded-3xl border border-primary/15 bg-card p-4 shadow-2xl shadow-primary/10 sm:p-6">
               <div className="rounded-2xl bg-primary p-6 text-primary-foreground"><div className="flex items-start justify-between"><div><p className="text-sm font-medium text-primary-foreground/75">Panel institucional</p><p className="mt-2 text-2xl font-semibold">Todo bajo control</p></div><span className="flex size-10 items-center justify-center rounded-xl bg-primary-foreground/15"><ShieldCheck className="size-5" /></span></div><div className="mt-8 grid grid-cols-2 gap-3"><div className="rounded-xl bg-primary-foreground/10 p-4"><p className="text-xs text-primary-foreground/70">Accesos hoy</p><p className="mt-1 text-2xl font-semibold">1.248</p></div><div className="rounded-xl bg-primary-foreground/10 p-4"><p className="text-xs text-primary-foreground/70">Personal activo</p><p className="mt-1 text-2xl font-semibold">386</p></div></div></div>
               <div className="grid gap-3 p-2 pt-5 sm:grid-cols-3"><div className="rounded-xl bg-muted/60 p-3"><ClipboardList className="size-4 text-primary" /><p className="mt-2 text-xs font-medium">Eventos</p></div><div className="rounded-xl bg-muted/60 p-3"><UsersRound className="size-4 text-primary" /><p className="mt-2 text-xs font-medium">Usuarios</p></div><div className="rounded-xl bg-muted/60 p-3"><LockKeyhole className="size-4 text-primary" /><p className="mt-2 text-xs font-medium">Acceso seguro</p></div></div>
             </div>
