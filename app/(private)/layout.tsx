@@ -12,7 +12,7 @@ export default function PrivateLayout({ children }: { children: ReactNode }) {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center gap-1 border-b px-4 bg-card">
+        <header className="flex h-16 shrink-0 items-center gap-3 border-b bg-card/80 px-4 backdrop-blur">
           <SidebarTrigger />
           <ThemeToggle />
         </header>
