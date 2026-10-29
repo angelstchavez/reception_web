@@ -16,7 +16,6 @@ import {
   Plus,
   Search,
   ShieldCheck,
-  UserRound,
   UsersRound,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
