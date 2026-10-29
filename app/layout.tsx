@@ -5,6 +5,8 @@ import { APP_NAME } from "@/lib/env";
 import { AuthProvider } from "@/components/providers/auth-provider";
 
 export const metadata: Metadata = {
+  title: "Reception · Control de acceso",
+  description: "Centro de operaciones para gestionar accesos, usuarios, vehículos y asistencia.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
   title: {
     default: "Control de Acceso | Universidad Popular del Cesar",

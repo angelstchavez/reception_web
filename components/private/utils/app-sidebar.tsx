@@ -8,6 +8,8 @@ import {
   ChartNoAxesCombined,
   UserPlus,
   UsersRound,
+  CarFront,
+  Settings2,
 } from "lucide-react";
 
 import {
@@ -60,6 +62,18 @@ const NAV_ITEMS: NavItem[] = [
     title: "Usuarios",
     url: "/users",
     icon: UserPlus,
+    roles: ["admin"],
+  },
+  {
+    title: "Vehículos",
+    url: "/vehicles",
+    icon: CarFront,
+    roles: ["admin", "guard"],
+  },
+  {
+    title: "Configuración",
+    url: "/settings",
+    icon: Settings2,
     roles: ["admin"],
   },
 ];

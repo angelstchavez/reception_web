@@ -60,8 +60,8 @@ export function LoginForm({
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
-      <Card>
-        <CardHeader className="text-center">
+      <Card className="border-primary/10 shadow-xl shadow-primary/5">
+        <CardHeader className="gap-3 pb-4 text-center"><div className="mx-auto flex size-11 items-center justify-center rounded-2xl bg-primary/10 text-primary"><span className="text-lg font-semibold">R</span></div>
           <CardTitle className="text-xl">Bienvenido de nuevo</CardTitle>
           <CardDescription>
             Inicia sesión con tu correo institucional
@@ -88,7 +88,7 @@ export function LoginForm({
                   <FieldLabel htmlFor="password">Contraseña</FieldLabel>
                   <a
                     href="#"
-                    className="ml-auto text-sm underline-offset-4 hover:underline"
+                    className="ml-auto text-sm text-primary underline-offset-4 hover:underline"
                   >
                     ¿Olvidaste tu contraseña?
                   </a>
