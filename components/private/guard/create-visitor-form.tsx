@@ -13,7 +13,7 @@ function errorMessage(error: ApiError | null) {
   return error.message || "No se pudo crear el visitante.";
 }
 
-export function CreateVisitorForm() {
+export function CreateVisitorForm({ onCreated }: { onCreated?: () => void }) {
   const { createVisitor, loading, error } = useCreateVisitor();
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -43,6 +43,7 @@ export function CreateVisitorForm() {
       setEmail("");
       setPassword("");
       setExpiresAt("");
+      onCreated?.();
     }
   }
 
