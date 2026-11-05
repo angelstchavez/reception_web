@@ -71,6 +71,11 @@ const NAV_ITEMS: NavItem[] = [
     roles: ["admin", "guard"],
   },
   {
+    title: "Catálogos",
+    url: "/catalogs",
+    icon: Settings2,
+  },
+  {
     title: "Configuración",
     url: "/settings",
     icon: Settings2,

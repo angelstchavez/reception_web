@@ -1,6 +1,25 @@
 export type Role = "admin" | "guard" | "student" | "professor" | "visitor";
 
 export type EventType = "entry" | "exit";
+export type VehicleType = "car" | "motorcycle" | "bicycle" | "other";
+
+export interface VehicleCreate {
+  plate: string;
+  vehicle_type: VehicleType;
+  brand: string;
+  model: string;
+  color: string;
+  photo_key: string;
+  owner_id?: string | null;
+}
+
+export interface VehicleRead extends Omit<VehicleCreate, "photo_key"> {
+  id: string;
+  owner_id: string;
+  is_active: boolean;
+  created_at: string;
+  photo_url: string | null;
+}
 
 export interface UserRead {
   id: string;
