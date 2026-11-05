@@ -22,9 +22,9 @@ export type AttendanceAlert = {
 
 export const attendanceService = {
   list: (params?: { student_id?: string; group_id?: string; schedule_block_id?: string; limit?: number; offset?: number }) =>
-    apiClient.get<AttendanceEvent[]>("/class-attendance", params),
+    apiClient.get<AttendanceEvent[]>("/class-attendance", { params }),
   listAlerts: (params?: { student_id?: string; limit?: number; offset?: number }) =>
-    apiClient.get<AttendanceAlert[]>("/attendance-alerts", params),
+    apiClient.get<AttendanceAlert[]>("/attendance-alerts", { params }),
   metrics: (date_from: string, date_to: string) =>
-    apiClient.get<Record<string, unknown>>("/metrics/attendance", { date_from, date_to }),
+    apiClient.get<Record<string, unknown>>("/metrics/attendance", { params: { date_from, date_to } }),
 }

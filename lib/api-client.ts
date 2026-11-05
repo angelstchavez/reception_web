@@ -20,7 +20,7 @@ export class ApiError extends Error {
 interface RequestOptions extends Omit<RequestInit, "body"> {
   json?: unknown;
   form?: Record<string, string>;
-  params?: Record<string, string | number | undefined>;
+  params?: object;
 }
 
 function buildQuery(params?: RequestOptions["params"]) {

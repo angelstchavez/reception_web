@@ -7,13 +7,13 @@ export interface VehicleListParams extends ListParams { owner_id?: string }
 
 export const resourcesService = {
   listUsers(params?: UserListParams) {
-    return apiClient.get<UserRead[]>("users", { params });
+    return apiClient.get<UserRead[]>("users", { params: params ? { ...params } : undefined });
   },
   createUser(payload: UserCreate) {
     return apiClient.post<UserRead>("users", { json: payload });
   },
   listVehicles(params?: VehicleListParams) {
-    return apiClient.get<VehicleRead[]>("vehicles", { params });
+    return apiClient.get<VehicleRead[]>("vehicles", { params: params ? { ...params } : undefined });
   },
   createVehicle(payload: VehicleCreate) {
     return apiClient.post<VehicleRead>("vehicles", { json: payload });

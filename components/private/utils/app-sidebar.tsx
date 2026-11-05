@@ -81,6 +81,7 @@ const NAV_ITEMS: NavItem[] = [
     title: "Catálogos",
     url: "/catalogs",
     icon: Settings2,
+    roles: ["admin"],
   },
   {
     title: "Configuración",
