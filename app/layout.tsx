@@ -5,9 +5,9 @@ import { APP_NAME } from "@/lib/env";
 import { AuthProvider } from "@/components/providers/auth-provider";
 
 export const metadata: Metadata = {
-  title: "Reception · Control de acceso",
-  description: "Centro de operaciones para gestionar accesos, usuarios, vehículos y asistencia.",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+  ),
   title: {
     default: "Control de Acceso | Universidad Popular del Cesar",
     template: "%s | Universidad Popular del Cesar",
@@ -15,7 +15,10 @@ export const metadata: Metadata = {
   description:
     "Plataforma administrativa institucional para supervisar el control de acceso de la Universidad Popular del Cesar.",
   applicationName: APP_NAME,
-  robots: { index: false, follow: false },
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
