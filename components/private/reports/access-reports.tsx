@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/chart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { AccessEventRead } from "@/types/api";
 
 const activityChartConfig = {
@@ -356,9 +357,30 @@ export function AccessReports() {
           value={data.peak.hour}
           detail={`${data.peak.entries + data.peak.exits} eventos registrados`}
         />
+
+        <MetricCard
+          icon={Activity}
+          label="Balance neto"
+          value={`${data.netFlow > 0 ? "+" : ""}${data.netFlow}`}
+          detail="Entradas menos salidas"
+        />
+
+        <MetricCard
+          icon={Users}
+          label="Ratio entrada/salida"
+          value={data.entryExitRatio.toFixed(2)}
+          detail="Flujo promedio observado"
+        />
       </div>
 
       {/* Gráficos */}
+      <Tabs defaultValue="visualizaciones" className="flex flex-col gap-4">
+        <TabsList className="w-full justify-start overflow-x-auto">
+          <TabsTrigger value="visualizaciones">Visualizaciones</TabsTrigger>
+          <TabsTrigger value="resumen">Resumen ejecutivo</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="visualizaciones" className="mt-0">
       <div className="grid min-w-0 grid-cols-1 gap-6 xl:grid-cols-2">
         {/* Comportamiento diario */}
         <Card className="min-w-0 overflow-hidden border-border/60 shadow-sm">
@@ -585,6 +607,29 @@ export function AccessReports() {
           </CardContent>
         </Card>
       </div>
+        </TabsContent>
+
+        <TabsContent value="resumen" className="mt-0">
+          <div className="grid gap-4 md:grid-cols-3">
+            <Card>
+              <CardHeader className="pb-2"><CardTitle className="text-base">Lectura operativa</CardTitle></CardHeader>
+              <CardContent className="text-sm text-muted-foreground">
+                {data.netFlow >= 0
+                  ? "El campus mantiene más entradas que salidas en el período seleccionado."
+                  : "Se observan más salidas que entradas; revisa el cierre de jornada y los turnos activos."}
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="pb-2"><CardTitle className="text-base">Momento crítico</CardTitle></CardHeader>
+              <CardContent><p className="text-3xl font-bold tabular-nums">{data.peak.hour}</p><p className="mt-1 text-sm text-muted-foreground">Mayor concentración de eventos</p></CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="pb-2"><CardTitle className="text-base">Cobertura del reporte</CardTitle></CardHeader>
+              <CardContent><p className="text-3xl font-bold tabular-nums">7 días</p><p className="mt-1 text-sm text-muted-foreground">Ventana móvil de análisis</p></CardContent>
+            </Card>
+          </div>
+        </TabsContent>
+      </Tabs>
 
       {!isAdmin && (
         <div className="flex items-start gap-3 rounded-lg border border-dashed bg-muted/20 px-4 py-3 text-sm text-muted-foreground">
