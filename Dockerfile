@@ -1,4 +1,3 @@
-```dockerfile
 # ==========================================
 # Base
 # ==========================================
@@ -11,9 +10,9 @@ WORKDIR /app
 # ==========================================
 FROM base AS deps
 
-COPY package.json package-lock.json ./
+COPY package.json bun.lock ./
 
-RUN npm ci
+RUN npm install --global bun@1.3.14 && bun install --frozen-lockfile
 
 # ==========================================
 # Build
@@ -69,4 +68,3 @@ ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
 CMD ["node", "server.js"]
-```

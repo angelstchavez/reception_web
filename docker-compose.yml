@@ -12,10 +12,17 @@ services:
         RECEPTION_API_URL: ${RECEPTION_API_URL}
 
     env_file:
-      - .env.docker
+      - .env.template
 
     ports:
       - "3000:3000"
 
     restart: unless-stopped
+    networks:
+      - reception_api
+
+networks:
+  reception_api:
+    external: true
+    name: reception_api_default
 
