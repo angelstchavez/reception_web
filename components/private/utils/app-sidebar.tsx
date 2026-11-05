@@ -10,6 +10,7 @@ import {
   UsersRound,
   CarFront,
   Settings2,
+  ClipboardCheck,
 } from "lucide-react";
 
 import {
@@ -69,6 +70,17 @@ const NAV_ITEMS: NavItem[] = [
     url: "/vehicles",
     icon: CarFront,
     roles: ["admin", "guard"],
+  },
+  {
+    title: "Asistencia",
+    url: "/attendance",
+    icon: ClipboardCheck,
+    roles: ["admin", "guard", "professor"],
+  },
+  {
+    title: "Catálogos",
+    url: "/catalogs",
+    icon: Settings2,
   },
   {
     title: "Configuración",
