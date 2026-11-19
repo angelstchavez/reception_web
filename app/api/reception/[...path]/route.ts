@@ -27,9 +27,11 @@ function copyResponse(upstream: Response) {
   const headers = new Headers();
   const contentType = upstream.headers.get("content-type");
   if (contentType) headers.set("content-type", contentType);
-  return upstream.arrayBuffer().then(
-    (body) => new NextResponse(body, { status: upstream.status, headers }),
-  );
+  return upstream
+    .arrayBuffer()
+    .then(
+      (body) => new NextResponse(body, { status: upstream.status, headers }),
+    );
 }
 
 async function upstreamRequest(
@@ -46,9 +48,7 @@ async function upstreamRequest(
   return fetch(apiUrl(request, path), {
     method: request.method,
     headers,
-    body: ["GET", "HEAD"].includes(request.method)
-      ? undefined
-      : requestBody,
+    body: ["GET", "HEAD"].includes(request.method) ? undefined : requestBody,
     cache: "no-store",
   });
 }
@@ -65,13 +65,22 @@ async function refreshTokens(request: NextRequest, refreshToken: string) {
 }
 
 function setSession(response: NextResponse, tokens: TokenPair) {
-  response.cookies.set(ACCESS_COOKIE, tokens.access_token, sessionCookieOptions());
-  response.cookies.set(REFRESH_COOKIE, tokens.refresh_token, sessionCookieOptions());
+  response.cookies.set(
+    ACCESS_COOKIE,
+    tokens.access_token,
+    sessionCookieOptions(),
+  );
+  response.cookies.set(
+    REFRESH_COOKIE,
+    tokens.refresh_token,
+    sessionCookieOptions(),
+  );
 }
 
 function clearSession(response: NextResponse) {
-  response.cookies.delete(ACCESS_COOKIE);
-  response.cookies.delete(REFRESH_COOKIE);
+  const expiredOptions = "Max-Age=0; Path=/; HttpOnly; SameSite=Lax";
+  response.headers.append("Set-Cookie", `${ACCESS_COOKIE}=; ${expiredOptions}`);
+  response.headers.append("Set-Cookie", `${REFRESH_COOKIE}=; ${expiredOptions}`);
 }
 
 async function handle(request: NextRequest, context: GatewayContext) {
@@ -82,11 +91,19 @@ async function handle(request: NextRequest, context: GatewayContext) {
     : await request.arrayBuffer();
 
   if (pathname === BLOCKED_PATH) {
-    return NextResponse.json({ detail: "La función de escaneo no está disponible." }, { status: 404 });
+    return NextResponse.json(
+      { detail: "La función de escaneo no está disponible." },
+      { status: 404 },
+    );
   }
 
   if (pathname === "auth/login" && request.method === "POST") {
-    const upstream = await upstreamRequest(request, path, undefined, requestBody);
+    const upstream = await upstreamRequest(
+      request,
+      path,
+      undefined,
+      requestBody,
+    );
     const tokens = upstream.ok
       ? ((await upstream.clone().json()) as TokenPair)
       : null;
@@ -102,14 +119,24 @@ async function handle(request: NextRequest, context: GatewayContext) {
 
   if (pathname === "auth/refresh" && request.method === "POST") {
     const refreshToken = request.cookies.get(REFRESH_COOKIE)?.value;
-    if (!refreshToken) return NextResponse.json({ detail: "Sesión no disponible." }, { status: 401 });
+    if (!refreshToken)
+      return NextResponse.json(
+        { detail: "Sesión no disponible." },
+        { status: 401 },
+      );
     const tokens = await refreshTokens(request, refreshToken);
     if (!tokens) {
-      const response = NextResponse.json({ detail: "Sesión expirada." }, { status: 401 });
+      const response = NextResponse.json(
+        { detail: "Sesión expirada." },
+        { status: 401 },
+      );
       clearSession(response);
       return response;
     }
-    const response = NextResponse.json({ token_type: tokens.token_type, card_credential: null });
+    const response = NextResponse.json({
+      token_type: tokens.token_type,
+      card_credential: null,
+    });
     setSession(response, tokens);
     return response;
   }
@@ -124,7 +151,9 @@ async function handle(request: NextRequest, context: GatewayContext) {
           cache: "no-store",
         })
       : null;
-    const response = upstream ? await copyResponse(upstream) : new NextResponse(null, { status: 204 });
+    const response = upstream
+      ? await copyResponse(upstream)
+      : new NextResponse(null, { status: 204 });
     clearSession(response);
     return response;
   }
@@ -135,14 +164,22 @@ async function handle(request: NextRequest, context: GatewayContext) {
     return copyResponse(upstream);
   }
 
-  const tokens = await refreshTokens(request, request.cookies.get(REFRESH_COOKIE)!.value);
+  const tokens = await refreshTokens(
+    request,
+    request.cookies.get(REFRESH_COOKIE)!.value,
+  );
   if (!tokens) {
     const response = await copyResponse(upstream);
     clearSession(response);
     return response;
   }
 
-  upstream = await upstreamRequest(request, path, tokens.access_token, requestBody);
+  upstream = await upstreamRequest(
+    request,
+    path,
+    tokens.access_token,
+    requestBody,
+  );
   const response = await copyResponse(upstream);
   setSession(response, tokens);
   return response;
@@ -152,10 +189,12 @@ async function gateway(request: NextRequest, context: GatewayContext) {
   try {
     return await handle(request, context);
   } catch {
-    return NextResponse.json(
+    const response = NextResponse.json(
       { detail: "No fue posible comunicarse con el servicio de recepción." },
       { status: 502 },
     );
+    clearSession(response);
+    return response;
   }
 }
 
