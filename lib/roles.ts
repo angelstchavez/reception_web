@@ -13,3 +13,13 @@ export const ROUTE_ACCESS: Record<string, RoleType[]> = {
 export function homeForRole(): string {
   return "/dashboard";
 }
+
+export function getAccessibleRoutes(role: RoleType): string[] {
+  return Object.entries(ROUTE_ACCESS)
+    .filter(([, roles]) => roles.includes(role))
+    .map(([route]) => route);
+}
+
+export function hasRouteAccess(role: RoleType, route: string): boolean {
+  return getAccessibleRoutes(role).includes(route);
+}

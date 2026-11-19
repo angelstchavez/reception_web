@@ -41,3 +41,19 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Reportes generados por las suites (se adjuntan en el zip de entrega)
+reports/
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+.playwright/
+
+# Vitest / Vite
+coverage/
+.vitest/
+
+# Newman
+newman/
