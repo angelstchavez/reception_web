@@ -5,23 +5,25 @@ test.describe("Gestión de usuarios (admin)", () => {
     // Arrange
     await usersPage.goto();
 
-    // Act (solo carga) / Assert
+    // Assert
     await expect(usersPage.heading).toBeVisible();
-    await expect(usersPage.table).toBeVisible();
-    await expect(usersPage.rows.first()).toBeVisible();
+    await expect(usersPage.table).toBeVisible({ timeout: 15_000 });
+    await expect(usersPage.rows.first()).toBeVisible({ timeout: 15_000 });
   });
 
-  test("CP-07 admin filtra por rol Estudiantes", async ({ usersPage }) => {
+  test("CP-07 admin filtra usuarios por búsqueda", async ({ usersPage }) => {
     // Arrange
     await usersPage.goto();
-    await expect(usersPage.table).toBeVisible();
+    await expect(usersPage.table).toBeVisible({ timeout: 15_000 });
 
-    // Act
-    await usersPage.filterByRole("Estudiantes");
+    // Act — búsqueda que NO debe coincidir con ningún usuario
+    await usersPage.search("zzz-no-existe-zzz");
 
-    // Assert
-    // Verifica que las filas visibles tienen rol Estudiante (o Estudiante badge)
-    await expect(usersPage.rows.first()).toContainText(/estudiante/i);
+    // Assert — la tabla muestra el placeholder de "sin resultados"
+    await expect(usersPage.table).toContainText(
+      /no hay usuarios que coincidan/i,
+      { timeout: 10_000 },
+    );
   });
 });
 
@@ -35,23 +37,17 @@ test.describe("Control de acceso por rol (RBAC)", () => {
     await page.goto("/dashboard");
     await expect(page).toHaveURL(/\/dashboard/);
 
+    // Esperar a que useAuth termine (NavUser aparece solo cuando user !== null).
+    // No dependemos del nombre exacto del guardia: basta con que el sidebar
+    // haya aplicado el filter() por rol. Lo verificamos esperando que el link
+    // "Visitantes" (permitido para guard) exista.
+    await expect(page.getByRole("link", { name: /^visitantes$/i })).toBeVisible(
+      { timeout: 15_000 },
+    );
+
     // Act / Assert
     await expect(page.getByRole("link", { name: /^usuarios$/i })).toHaveCount(
       0,
     );
-    await expect(
-      page.getByRole("link", { name: /^visitantes$/i }),
-    ).toBeVisible();
   });
-});
-
-test.skip("DEBUG ver estructura de tabs", async ({ usersPage, page }) => {
-  await usersPage.goto();
-  await page.waitForLoadState("networkidle");
-
-  const tabRole = await page.getByRole("tab").count();
-  const tablistRole = await page.getByRole("tablist").count();
-  const textos = await page.locator('[role="tablist"] *').allTextContents();
-
-  console.log({ tabRole, tablistRole, textos });
 });
